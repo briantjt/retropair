@@ -1,25 +1,64 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
-
+import React, { Component } from "react";
+import InputBar from "./InputBar";
+import "./App.css";
+const createOption = label => ({
+  label,
+  value: label
+});
 class App extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      inputValue: "",
+      value: []
+    };
+    this.handleChange = this.handleChange.bind(this);
+    this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleKeyDown = this.handleKeyDown.bind(this);
+  }
+
+  handleChange = (value, actionMeta) => {
+    console.group("Value Changed");
+    console.log(value);
+    console.log(`action: ${actionMeta.action}`);
+    console.groupEnd();
+    this.setState({ value });
+  };
+  handleInputChange = inputValue => {
+    this.setState({ inputValue });
+  };
+  handleKeyDown = event => {
+    const { inputValue, value } = this.state;
+    if (!inputValue) return;
+    // eslint-disable-next-line default-case
+    switch (event.key) {
+      case "Enter":
+      case "Tab":
+        console.group("Value Added");
+        console.log(value);
+        console.groupEnd();
+        this.setState({
+          inputValue: "",
+          value: [...value, createOption(inputValue)]
+        });
+        event.preventDefault();
+    }
+  };
   render() {
+    const state = {
+      inputValue: this.state.inputValue,
+      value: this.state.value
+    };
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        <h1>Retrospective Pairings</h1>
+        <InputBar
+          state={state}
+          handleKeyDown={this.handleKeyDown}
+          handleInputChange={this.handleInputChange}
+          handleChange={this.handleChange}
+        />
       </div>
     );
   }
