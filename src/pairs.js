@@ -1,19 +1,3 @@
-"use strict";
-let people = [
-  "Brian",
-  "Calvin",
-  "Sheldon",
-  "Xinfang",
-  "Kaixin",
-  "Angeline",
-  "Yamin",
-  "Tim",
-  "Huimin",
-  "Delphine",
-  "Shun",
-  "Sebastian"
-];
-
 function tableFill(array) {
   let pairs = Math.floor(array.length / 2);
   let tableArray = [[], []];
@@ -47,12 +31,11 @@ export default function createPairs(array) {
     let clone = array.slice(1);
     while (--i) {
       clone.unshift(clone.pop());
-      pairs = tableFill([...clone])
-      pairs[head] = pairs["Sit Out"]
-      delete pairs["Sit Out"]
+      pairs = tableFill([...clone]);
+      pairs[head] = pairs["Sit Out"];
+      delete pairs["Sit Out"];
       arrayOfPairs.push(pairs);
     }
   }
   return arrayOfPairs;
 }
-
