@@ -6,9 +6,35 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #000;
+  color: #fff;
 }
 
+.pair-container {
+  margin-bottom: 40px;
+}
+.pairings {
+  color: #fff;
+}
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+@media (min-width: 576px) {
+  .App {
+    width: 100%;
+  }
+}
+
+@media (min-width: 768px) {
+  .App {
+    width: 70%;
+  }
+}
+
+@media (min-width: 992px) {
+  .App {
+    width: 50%;
+  }
 }

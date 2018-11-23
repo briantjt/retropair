@@ -3,6 +3,7 @@ import InputBar from "./InputBar";
 import "./App.css";
 import pairs from "./pairs";
 import PairMap from "./PairMap";
+import Slider from "./Slider";
 
 const createOption = label => ({
   label,
@@ -41,9 +42,6 @@ class App extends Component {
     switch (event.key) {
       case "Enter":
       case "Tab":
-        console.group("Value Added");
-        console.log(value);
-        console.groupEnd();
         this.setState({
           inputValue: "",
           value: [...value, createOption(inputValue)]
@@ -54,6 +52,9 @@ class App extends Component {
 
   createPairs() {
     const { value } = this.state;
+    if (value.length < 1) {
+      return;
+    }
     let pairings = pairs(value.map(object => object.value));
     console.log(pairings);
     this.setState({ pairings });
@@ -63,21 +64,30 @@ class App extends Component {
       inputValue: this.state.inputValue,
       value: this.state.value
     };
+    const pairs = this.state.pairings
+      ? this.state.pairings.map((pairs, index) => {
+          return (
+            <div>
+              <PairMap pairs={pairs} round={index} key={index} />
+            </div>
+          );
+        })
+      : null;
     return (
       <div className="App">
         <h1>Retrospective Pairings</h1>
+        <br/>
         <InputBar
           state={state}
           handleKeyDown={this.handleKeyDown}
           handleInputChange={this.handleInputChange}
           handleChange={this.handleChange}
         />
-        <button onClick={this.createPairs}>Pair Up!</button>
-        {this.state.pairings
-          ? this.state.pairings.map((pairs, index) => {
-              return <PairMap pairs={pairs} round={index} key={index} />;
-            })
-          : null}
+        <br/>
+        <button className="btn btn-light" onClick={this.createPairs}>Pair Up!</button>
+        <br/>
+        <br/>
+        {pairs ? <Slider pairs={pairs} /> : null}
       </div>
     );
   }
