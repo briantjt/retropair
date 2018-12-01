@@ -21,7 +21,7 @@ export default class CreatableInputOnly extends Component {
         onChange={handleChange}
         onInputChange={handleInputChange}
         onKeyDown={handleKeyDown}
-        placeholder="Type something and press enter..."
+        placeholder="Type each person's name and press enter..."
         value={value}
       />
     );
